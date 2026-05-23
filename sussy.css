@@ -216,7 +216,7 @@ button {
   width: 38px;
   height: 68px;
   border-radius: 8px;
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(235, 225, 225, 0.849);
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(2px);
   animation: drift linear infinite;
