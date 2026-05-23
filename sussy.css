@@ -53,7 +53,7 @@ button {
   font-weight: 640;
   color: #fafaf6;
   letter-spacing: -0.06em;
-  top: 70%;
+  top: 80%;
 }
 
 .button-item {
@@ -261,4 +261,105 @@ button {
   100% { transform: translateY(-120vh) rotate(calc(var(--tilt) * -1)); opacity: 0; }
 }
 
+/* CAROUSEL */
+.carousel-wrapper {
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: min(680px, 88vw);
+  z-index: 1;
+}
 
+.carousel-track-container {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide {
+  min-width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 2rem 2.5rem;
+  text-align: center;
+  color: white;
+  font-family: "Arial", sans-serif;
+  box-sizing: border-box;
+  backdrop-filter: blur(6px);
+}
+
+.slide-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.6rem;
+}
+
+.slide h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgba(255, 208, 116);
+}
+
+.slide p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+}
+
+.arrow {
+  all: unset;
+  cursor: pointer;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.arrow:hover {
+  background: rgba(255, 208, 116, 0.2);
+  border-color: rgba(255, 208, 116, 0.6);
+}
+
+/* DOTS */
+.carousel-dots {
+  position: absolute;
+  top: calc(43% + 11rem);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 1;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.dot.active {
+  background: rgba(255, 208, 116);
+  transform: scale(1.3);
+}

@@ -9,32 +9,94 @@
 </head>
 
 <body>
-    <div id="name">
-        gurt
+  <div id="name">gurt<sub>b</sub></div>
+  <div id="desc">Track screentime, compete with friends, and build better habits.</div>
+
+  <!-- PITCH CAROUSEL -->
+  <div class="carousel-wrapper">
+    <button class="arrow arrow-left" onclick="moveSlide(-1)">&#8592;</button>
+
+    <div class="carousel-track-container">
+      <div class="carousel-track" id="carouselTrack">
+
+        <div class="slide">
+          <div class="slide-icon">📱</div>
+          <h3>Track Your Screentime</h3>
+          <p>See exactly where your hours go — broken down by app, category, and time of day.</p>
+        </div>
+
+        <div class="slide">
+          <div class="slide-icon">🏆</div>
+          <h3>Compete With Friends</h3>
+          <p>Climb leaderboards with your friends and incentivize your journey.</p>
+        </div>
+
+        <div class="slide">
+          <div class="slide-icon">🌱</div>
+          <h3>Build Better Habits</h3>
+          <p>Set daily limits, earn streaks, and get nudges before you go overboard.</p>
+        </div>
+
+        <div class="slide">
+          <div class="slide-icon">📊</div>
+          <h3>Detailed Insights</h3>
+          <p>Weekly reports show your progress and highlight where you've improved.</p>
+        </div>
+
+      </div>
     </div>
-    <div id="desc">
-        Track screentime, compete with friends, and build better habits. 
-    </div>
-<br></br>
-<button class="button button-item">
-  <span class="button-bg">
-    <span class="button-bg-layers">
-      <span class="button-bg-layer button-bg-layer-1 -purple"></span>
-      <span class="button-bg-layer button-bg-layer-2 -turquoise"></span>
-      <span class="button-bg-layer button-bg-layer-3 -yellow"></span>
+
+    <button class="arrow arrow-right" onclick="moveSlide(1)">&#8594;</button>
+  </div>
+
+  <div class="carousel-dots" id="carouselDots"></div>
+  <!-- END CAROUSEL -->
+
+  <button class="button button-item">
+    <span class="button-bg">
+      <span class="button-bg-layers">
+        <span class="button-bg-layer button-bg-layer-1 -purple"></span>
+        <span class="button-bg-layer button-bg-layer-2 -turquoise"></span>
+        <span class="button-bg-layer button-bg-layer-3 -yellow"></span>
+      </span>
     </span>
-  </span>
-  <span class="button-inner">
-    <span class="button-inner-static">Download Now</span>
-    <span class="button-inner-hover">Download Now</span>
-  </span>
-</button>
-<div class="phones-container">
-  <div class="phone p1"></div>
-  <div class="phone p2"></div>
-  <div class="phone p3"></div>
-  <div class="phone p4"></div>
-  <div class="phone p5"></div>
-</div>
+    <span class="button-inner">
+      <span class="button-inner-static">Download Now</span>
+      <span class="button-inner-hover">Download Now</span>
+    </span>
+  </button>
+
+  <div class="phones-container">
+    <div class="phone p1"></div>
+    <div class="phone p2"></div>
+    <div class="phone p3"></div>
+    <div class="phone p4"></div>
+    <div class="phone p5"></div>
+  </div>
+
+  <script>
+    let current = 0;
+    const track = document.getElementById('carouselTrack');
+    const slides = track.querySelectorAll('.slide');
+    const dotsContainer = document.getElementById('carouselDots');
+
+    // Build dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => goTo(i);
+      dotsContainer.appendChild(dot);
+    });
+
+    function goTo(index) {
+      current = (index + slides.length) % slides.length;
+      track.style.transform = `translateX(-${current * 100}%)`;
+      document.querySelectorAll('.dot').forEach((d, i) =>
+        d.classList.toggle('active', i === current)
+      );
+    }
+
+    function moveSlide(dir) { goTo(current + dir); }
+  </script>
 </body>
 </html>
