@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GURT<sub>B</sub> — Get Ur Time Back</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2eb;
+    --lime: #c8f542;
+    --lime-dark: #9dc414;
+    --red: #ff3b30;
+    --muted: #888;
+    --card-bg: #141414;
+    --border: #2a2a2a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--lime);
+  }
+  .nav-cta {
+    background: var(--lime);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .nav-cta:hover { background: var(--lime-dark); color: var(--white); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(120px, 22vw, 280px);
+    color: transparent;
+    -webkit-text-stroke: 1px #1e1e1e;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: 8px;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 13vw, 160px);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero h1 .accent { color: var(--lime); }
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 22px);
+    color: #aaa;
+    max-width: 540px;
+    margin-top: 28px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .hero-sub strong { color: var(--white); font-weight: 600; }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--lime);
+    color: var(--black);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    padding: 16px 36px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.15s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); background: #d4ff52; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--white);
+    font-weight: 500;
+    font-size: 15px;
+    padding: 16px 36px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .btn-ghost:hover { border-color: var(--lime); color: var(--lime); }
+
+  /* TICKER */
+  .ticker {
+    background: var(--lime);
+    color: var(--black);
+    padding: 12px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 18s linear infinite;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 3px;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* NIGHTMARE SECTION */
+  .nightmare {
+    padding: 100px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .nightmare-quote {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 6vw, 72px);
+    line-height: 1.1;
+    color: #333;
+  }
+  .nightmare-quote .highlight {
+    color: var(--white);
+    position: relative;
+  }
+  .nightmare-body {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .problem-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+  }
+  .problem-card .stat {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .problem-card p { color: #888; font-size: 15px; line-height: 1.6; }
+  .problem-card p strong { color: var(--white); }
+
+  /* SOLUTION BAND */
+  .solution-band {
+    padding: 80px 40px;
+    background: var(--lime);
+    color: var(--black);
+    text-align: center;
+  }
+  .solution-band .big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 5vw, 56px);
+    line-height: 1.1;
+    letter-spacing: 1px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .solution-band .sub {
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.7;
+    margin-top: 16px;
+  }
+
+  /* FEATURES */
+  .features {
+    padding: 100px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 28px;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+  .feature-card:hover {
+    border-color: var(--lime);
+    transform: translateY(-4px);
+  }
+  .feature-icon {
+    width: 44px;
+    height: 44px;
+    background: #1e1e1e;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .feature-card h3 {
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 10px;
+    letter-spacing: 0.2px;
+  }
+  .feature-card p {
+    color: #888;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .feature-card p strong { color: var(--lime); font-weight: 600; }
+  .feature-tag {
+    display: inline-block;
+    margin-top: 16px;
+    background: #1e1e1e;
+    color: #555;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+
+  /* LIVE FEED MOCKUP */
+  .mockup-section {
+    padding: 100px 40px;
+    background: #0d0d0d;
+  }
+  .mockup-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .mockup-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 64px);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .mockup-text h2 span { color: var(--lime); }
+  .mockup-text p {
+    color: #888;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .mockup-phone {
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 32px;
+    padding: 24px 20px;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .phone-header {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .feed-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #1e1e1e;
+    animation: feedIn 0.4s ease both;
+  }
+  @keyframes feedIn {
+    from { opacity: 0; transform: translateX(-12px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .feed-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .feed-info { flex: 1; min-width: 0; }
+  .feed-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .feed-app { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .feed-time { font-family: 'DM Mono', monospace; font-size: 10px; color: #444; }
+  .app-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .app-tiktok { background: #ff2d55; color: #fff; }
+  .app-instagram { background: #c13584; color: #fff; }
+  .app-youtube { background: #ff0000; color: #fff; }
+  .app-snapchat { background: #fffc00; color: #000; }
+
+  /* LEADERBOARD SECTION */
+  .leaderboard-section {
+    padding: 100px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .lb-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    max-width: 360px;
+  }
+  .lb-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .lb-title { font-weight: 600; font-size: 14px; }
+  .lb-cycle {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    background: #1e1e1e;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  .lb-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .lb-rank {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
+  }
+  .rank-1 { color: var(--lime); }
+  .rank-2 { color: #aaa; }
+  .rank-3 { color: #cd7f32; }
+  .lb-user { flex: 1; }
+  .lb-username { font-size: 14px; font-weight: 500; }
+  .lb-hrs { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .lb-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: var(--white);
+  }
+  .lb-bar-wrap {
+    width: 60px;
+    height: 4px;
+    background: #222;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .lb-bar { height: 100%; background: var(--lime); border-radius: 2px; }
+  .lb-delta { font-size: 10px; color: var(--lime); font-weight: 600; }
+
+  /* HOW IT WORKS */
+  .how {
+    padding: 100px 40px;
+    background: #0d0d0d;
+  }
+  .how-inner { max-width: 1100px; margin: 0 auto; }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    margin-top: 48px;
+    position: relative;
+  }
+  .step {
+    padding: 32px 24px;
+    border-left: 1px solid var(--border);
+    position: relative;
+  }
+  .step:first-child { border-left: none; }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: #1a1a1a;
+    line-height: 1;
+    margin-bottom: -8px;
+  }
+  .step h3 {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: var(--white);
+  }
+  .step p { color: #666; font-size: 14px; line-height: 1.6; }
+  .step-dot {
+    width: 8px; height: 8px;
+    background: var(--lime);
+    border-radius: 50%;
+    position: absolute;
+    top: 32px; left: -4.5px;
+  }
+  .step:first-child .step-dot { display: none; }
+
+  /* VS SECTION */
+  .vs-section {
+    padding: 100px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .vs-table {
+    margin-top: 48px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: left;
+  }
+  .vs-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .vs-row:last-child { border-bottom: none; }
+  .vs-cell {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+  }
+  .vs-header { background: #111; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; }
+  .vs-gurtb { background: rgba(200, 245, 66, 0.05); }
+  .check { color: var(--lime); font-size: 16px; }
+  .cross { color: #444; font-size: 16px; }
+
+  /* CTA */
+  .cta-section {
+    padding: 120px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-bg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200, 245, 66, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 9vw, 110px);
+    line-height: 0.95;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 2;
+  }
+  .cta-section h2 span { color: var(--lime); }
+  .cta-sub {
+    font-size: 18px;
+    color: #888;
+    margin: 24px 0 40px;
+    font-weight: 300;
+    position: relative;
+    z-index: 2;
+  }
+  .cta-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
+  .btn-big {
+    background: var(--lime);
+    color: var(--black);
+    font-weight: 700;
+    font-size: 17px;
+    padding: 18px 48px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.1s, filter 0.15s;
+  }
+  .btn-big:hover { transform: translateY(-3px); filter: brightness(1.08); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--lime);
+  }
+  .footer-tagline {
+    font-size: 13px;
+    color: #444;
+  }
+
+  @media (max-width: 700px) {
+    nav { padding: 16px 20px; }
+    .hero { padding: 100px 20px 60px; }
+    .nightmare, .features, .leaderboard-section, .how-inner, .vs-section, .cta-section { padding-left: 20px; padding-right: 20px; }
+    .nightmare-body { grid-template-columns: 1fr; }
+    .mockup-inner { grid-template-columns: 1fr; }
+    .leaderboard-section { grid-template-columns: 1fr; }
+    .vs-row { grid-template-columns: 2fr 1fr 1fr; }
+    .vs-row .vs-cell:nth-child(4) { display: none; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">GURT<sub>(B)</sub></div>
+  <button class="nav-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Get Early Access</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text">GURT<sub>(B)</sub></div>
+  <div class="hero-eyebrow">📱 DreamVenture Hackathon 2025</div>
+  <h1>GET UR<br><span class="accent">TIME</span><br>BACK.</h1>
+  <p class="hero-sub">
+    Phone addiction isn't a willpower problem. It's a <strong>visibility problem.</strong> GURT<sub>(B)</sub> turns your friends into your accountability system — with real social stakes.
+  </p>
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Join the Waitlist →</button>
+    <button class="btn-ghost" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">See How It Works</button>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-inner">
+    &nbsp;&nbsp;📵 GET UR TIME BACK &nbsp;&nbsp;·&nbsp;&nbsp; MAKE YOUR FRIENDS YOUR ACCOUNTABILITY &nbsp;&nbsp;·&nbsp;&nbsp; REAL STAKES. REAL DATA. REAL CHANGE. &nbsp;&nbsp;·&nbsp;&nbsp; NO MORE INVISIBLE HABITS &nbsp;&nbsp;·&nbsp;&nbsp; 📵 GET UR TIME BACK &nbsp;&nbsp;·&nbsp;&nbsp; MAKE YOUR FRIENDS YOUR ACCOUNTABILITY &nbsp;&nbsp;·&nbsp;&nbsp; REAL STAKES. REAL DATA. REAL CHANGE. &nbsp;&nbsp;·&nbsp;&nbsp; NO MORE INVISIBLE HABITS &nbsp;&nbsp;·&nbsp;&nbsp;
+  </span>
+</div>
+
+<!-- NIGHTMARE -->
+<section class="nightmare">
+  <div class="section-label">The Nightmare</div>
+  <div class="nightmare-quote">
+    Dinner. Phones down. <span class="highlight">Good intentions.</span><br>
+    Three minutes later — <span class="highlight">you're both scrolling.</span><br>
+    <span style="color:#555;">Neither of you even noticed.</span>
+  </div>
+  <div class="nightmare-body">
+    <div class="problem-card">
+      <div class="stat">4.7H</div>
+      <p>Average daily screen time for teens. Most of it is <strong>mindless scrolling</strong> that nobody chose consciously.</p>
+    </div>
+    <div class="problem-card">
+      <div class="stat">0%</div>
+      <p>Of existing apps use social accountability. Every tool treats phone addiction as a <strong>personal problem to solve alone.</strong> That's why they fail.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION BAND -->
+<div class="solution-band">
+  <div class="big">Phone addiction is a social problem.<br>It needs a social solution.</div>
+  <div class="sub">Every competing app treats it as personal. GURTB doesn't.</div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-label">Core Features</div>
+  <h2 style="font-family:'Bebas Neue',sans-serif; font-size: clamp(36px,6vw,72px); line-height:1; margin-bottom:8px;">
+    The <span style="color:var(--lime)">whole</span> toolkit.
+  </h2>
+  <p style="color:#888; max-width:500px; font-size:16px; line-height:1.7;">
+    Every piece exists somewhere else. Nobody has combined them like this — specifically for competitive phone reduction.
+  </p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Screen Time Tracker</h3>
+      <p>Pulls directly from your phone's built-in API. <strong>Objective. Can't be gamed.</strong> This is your score — no self-reporting, no faking.</p>
+      <span class="feature-tag">iOS & Android</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏆</div>
+      <h3>Friend Group Leaderboard</h3>
+      <p>Compete within your private friend group every 2 weeks. <strong>Real social stakes.</strong> Not school-wide — that's the point. Your friends actually care about your opinion.</p>
+      <span class="feature-tag">2-Week Cycles</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👁️</div>
+      <h3>App Activity Feed</h3>
+      <p>See exactly what app your friends are on, right now. Not their screen — just the app. <strong>Silent visibility creates pressure without nagging.</strong></p>
+      <span class="feature-tag">Discord-Inspired</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>Friend Challenges</h3>
+      <p>Bet your friends. <strong>Loser buys lunch.</strong> Punishments are optional — keep it fun or go hard. Challenges also invite friends to download the app automatically.</p>
+      <span class="feature-tag">Built-in Virality</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎮</div>
+      <h3>Avatar System</h3>
+      <p>Earn in-game currency for reducing screen time. Spend it on avatar customization. <strong>Tangible reward for real change.</strong> Like Finch, but competitive.</p>
+      <span class="feature-tag">Earn to Customize</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Privacy Controls</h3>
+      <p>TikTok, Instagram, YouTube, Snapchat are visible by default — that's the point. <strong>Sensitive apps are always hidden</strong> unless you choose to share them.</p>
+      <span class="feature-tag">User Controlled</span>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE FEED MOCKUP -->
+<section class="mockup-section">
+  <div class="mockup-inner">
+    <div class="mockup-text">
+      <div class="section-label">App Activity Feed</div>
+      <h2>Your friends. <span>Live.</span><br>No secrets.</h2>
+      <p>The moment your friend opens TikTok, everyone in your group sees it. No notification. No nudge. Just quiet visibility — the most powerful accountability tool ever invented.</p>
+      <p>It's not surveillance. It's <strong style="color:var(--white)">social stakes</strong> — the thing that actually changes behavior.</p>
+    </div>
+    <div class="mockup-phone">
+      <div class="phone-header">Activity Feed — Now</div>
+      <div class="feed-item" style="animation-delay:0.1s">
+        <div class="feed-avatar" style="background:#1e1e1e; color:#c8f542;">JK</div>
+        <div class="feed-info">
+          <div class="feed-name">jake_k</div>
+          <div class="feed-app">on <span class="app-pill app-tiktok">TikTok</span></div>
+        </div>
+        <div class="feed-time">now</div>
+      </div>
+      <div class="feed-item" style="animation-delay:0.25s">
+        <div class="feed-avatar" style="background:#1e1e1e; color:#ff9f0a;">MP</div>
+        <div class="feed-info">
+          <div class="feed-name">maya_p</div>
+          <div class="feed-app">on <span class="app-pill app-instagram">Instagram</span></div>
+        </div>
+        <div class="feed-time">2m</div>
+      </div>
+      <div class="feed-item" style="animation-delay:0.4s">
+        <div class="feed-avatar" style="background:#1e1e1e; color:#30d158;">AR</div>
+        <div class="feed-info">
+          <div class="feed-name">alex_r</div>
+          <div class="feed-app">on <span class="app-pill app-youtube">YouTube</span></div>
+        </div>
+        <div class="feed-time">5m</div>
+      </div>
+      <div class="feed-item" style="animation-delay:0.55s">
+        <div class="feed-avatar" style="background:#1e1e1e; color:#ff3b30;">SC</div>
+        <div class="feed-info">
+          <div class="feed-name">sofia_c</div>
+          <div class="feed-app">offline 📵</div>
+        </div>
+        <div class="feed-time">1h</div>
+      </div>
+      <div style="margin-top: 16px; background: rgba(200,245,66,0.08); border: 1px solid rgba(200,245,66,0.2); border-radius: 8px; padding: 12px; text-align: center;">
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--lime);">sofia_c</div>
+        <div style="font-size:11px; color:#888; margin-top:2px;">leading the group — 1h offline 🏆</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERBOARD -->
+<section style="padding: 100px 40px; background: var(--black);">
+  <div class="leaderboard-section" style="padding: 0; max-width: 1100px; margin: 0 auto;">
+    <div class="lb-card">
+      <div class="lb-header">
+        <div class="lb-title">Friday Night Crew 🔥</div>
+        <div class="lb-cycle">Week 1 of 2</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank rank-1">1</div>
+        <div class="lb-user">
+          <div class="lb-username">sofia_c</div>
+          <div class="lb-hrs">avg 1.2h / day</div>
+        </div>
+        <div>
+          <div class="lb-bar-wrap"><div class="lb-bar" style="width:95%"></div></div>
+          <div class="lb-delta" style="margin-top:3px; font-family:'DM Mono',monospace; font-size:9px;">↑ 2340 pts</div>
+        </div>
+        <div class="lb-score" style="color:var(--lime)">2340</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank rank-2">2</div>
+        <div class="lb-user">
+          <div class="lb-username">alex_r</div>
+          <div class="lb-hrs">avg 2.1h / day</div>
+        </div>
+        <div>
+          <div class="lb-bar-wrap"><div class="lb-bar" style="width:72%; background:#888"></div></div>
+          <div class="lb-delta" style="margin-top:3px; font-family:'DM Mono',monospace; font-size:9px; color:#666;">1820 pts</div>
+        </div>
+        <div class="lb-score" style="color:#888">1820</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank rank-3">3</div>
+        <div class="lb-user">
+          <div class="lb-username">maya_p</div>
+          <div class="lb-hrs">avg 3.0h / day</div>
+        </div>
+        <div>
+          <div class="lb-bar-wrap"><div class="lb-bar" style="width:55%; background:#cd7f32"></div></div>
+          <div class="lb-delta" style="margin-top:3px; font-family:'DM Mono',monospace; font-size:9px; color:#666;">1390 pts</div>
+        </div>
+        <div class="lb-score" style="color:#cd7f32">1390</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank" style="color:#444">4</div>
+        <div class="lb-user">
+          <div class="lb-username">jake_k</div>
+          <div class="lb-hrs">avg 5.8h / day 😬</div>
+        </div>
+        <div>
+          <div class="lb-bar-wrap"><div class="lb-bar" style="width:22%; background:#333"></div></div>
+          <div class="lb-delta" style="margin-top:3px; font-family:'DM Mono',monospace; font-size:9px; color:#444;">540 pts</div>
+        </div>
+        <div class="lb-score" style="color:#444">540</div>
+      </div>
+      <div style="margin-top:16px; padding-top:16px; border-top: 1px solid #1e1e1e; display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:12px; color:#555; font-family:'DM Mono',monospace;">Resets in 7 days</span>
+        <span style="font-size:12px; color:var(--lime); font-weight:600; cursor:pointer;">+ Challenge Friend →</span>
+      </div>
+    </div>
+    <div style="padding: 0 20px;">
+      <div class="section-label">Leaderboard</div>
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,5vw,60px); line-height:1.05; margin-bottom:20px;">
+        Losing to your<br>friends <span style="color:var(--lime)">hurts.</span><br>That's the point.
+      </h2>
+      <p style="color:#888; font-size:16px; line-height:1.7; margin-bottom:20px;">
+        Text bets fade. App notifications get ignored. A leaderboard your friends check every day? That doesn't go away.
+      </p>
+      <p style="color:#666; font-size:15px; line-height:1.7;">
+        Two-week cycles reset everything. Each season is a fresh start — and a recurring reason to re-engage.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="how-inner">
+    <div class="section-label">How It Works</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,6vw,72px); line-height:1;">Four steps to less screen time.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Connect your screen time</h3>
+        <p>GURTB reads directly from your phone's built-in screen time API. No setup, no self-reporting.</p>
+      </div>
+      <div class="step">
+        <div class="step-dot"></div>
+        <div class="step-num">02</div>
+        <h3>Add your friends</h3>
+        <p>Create a private group with your crew. Challenge a friend and they'll have to download the app to accept.</p>
+      </div>
+      <div class="step">
+        <div class="step-dot"></div>
+        <div class="step-num">03</div>
+        <h3>Compete every two weeks</h3>
+        <p>Whoever uses their phone least earns the most points. Live leaderboard. Full transparency. Real stakes.</p>
+      </div>
+      <div class="step">
+        <div class="step-dot"></div>
+        <div class="step-num">04</div>
+        <h3>Win. Flex. Repeat.</h3>
+        <p>Earn currency, customize your avatar, and collect the lunch your loser friend owes you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VS -->
+<section class="vs-section">
+  <div class="section-label">Competitive Landscape</div>
+  <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,6vw,72px); line-height:1; margin-bottom:8px;">
+    Nobody does <span style="color:var(--lime)">all of this.</span>
+  </h2>
+  <p style="color:#888; max-width:500px; margin:0 auto; font-size:15px; line-height:1.7;">
+    Individual features exist elsewhere. The combination — for this purpose, for this audience — doesn't.
+  </p>
+  <div class="vs-table">
+    <div class="vs-row vs-header">
+      <div class="vs-cell">Feature</div>
+      <div class="vs-cell" style="color:var(--lime)">GURT<sub>(B)</sub></div>
+      <div class="vs-cell">Opal</div>
+      <div class="vs-cell">Forest</div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-cell" style="color:#aaa;">Real Screen Time Data</div>
+      <div class="vs-cell vs-gurtb"><span class="check">✓</span></div>
+      <div class="vs-cell"><span class="check">✓</span></div>
+      <div class="vs-cell"><span class="cross">✗</span></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-cell" style="color:#aaa;">Friend Leaderboard</div>
+      <div class="vs-cell vs-gurtb"><span class="check">✓</span></div>
+      <div class="vs-cell"><span class="cross" style="color:#555;">basic</span></div>
+      <div class="vs-cell"><span class="cross">✗</span></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-cell" style="color:#aaa;">Live App Activity Feed</div>
+      <div class="vs-cell vs-gurtb"><span class="check">✓</span></div>
+      <div class="vs-cell"><span class="cross">✗</span></div>
+      <div class="vs-cell"><span class="cross">✗</span></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-cell" style="color:#aaa;">Friend Challenges / Bets</div>
+      <div class="vs-cell vs-gurtb"><span class="check">✓</span></div>
+      <div class="vs-cell"><span class="cross">✗</span></div>
+      <div class="vs-cell"><span class="cross">✗</span></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-cell" style="color:#aaa;">Avatar + Rewards System</div>
+      <div class="vs-cell vs-gurtb"><span class="check">✓</span></div>
+      <div class="vs-cell"><span class="cross">✗</span></div>
+      <div class="vs-cell"><span class="check">✓</span></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-cell" style="color:#aaa;">Built-in Invite Mechanic</div>
+      <div class="vs-cell vs-gurtb"><span class="check">✓</span></div>
+      <div class="vs-cell"><span class="cross">✗</span></div>
+      <div class="vs-cell"><span class="cross">✗</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-bg"></div>
+  <div class="section-label" style="color:var(--muted);">Get Early Access</div>
+  <h2>PUT DOWN<br>THE <span>PHONE.</span><br>WIN THE BET.</h2>
+  <p class="cta-sub">Join the waitlist. Be first in your friend group to sign up.</p>
+  <div class="cta-btns">
+    <button class="btn-big">📱 Join the Waitlist</button>
+  </div>
+  <p style="margin-top:24px; font-size:13px; color:#444; font-family:'DM Mono',monospace; letter-spacing:1px;">iOS & ANDROID · FREE TO JOIN · COMING SOON</p>
+</section>
+
+<footer>
+  <div class="footer-logo">GURT<sub>B</sub></div>
+  <div class="footer-tagline">Get Ur Time Back · DreamVenture Hackathon 2025</div>
+  <div style="font-size:13px; color:#444;">Built for the dinner table problem.</div>
+</footer>
+
+</body>
+</html>
